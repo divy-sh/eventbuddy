@@ -69,7 +69,7 @@ public class EventDao {
   public Image addImage(int eventId, String imageUrl) {
     String query = "call insert_event_image(?, ?)";
     List<Image> images = queryManager.runQuery(query, Image.class, imageUrl, eventId);
-    if(images.isEmpty()) {
+    if (images.isEmpty()) {
       return null;
     }
     return images.get(0);

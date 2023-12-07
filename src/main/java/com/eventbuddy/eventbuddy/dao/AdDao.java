@@ -15,7 +15,7 @@ public class AdDao {
     String query = "call insert_advertisement(?, ?, ?, ?, ?)";
     List<Ad> ads = queryManager.runQuery(query, Ad.class, ad.getAdTitle(), ad.getAdImageLocation(),
         ad.getBeginTime(), ad.getEndTime(), ad.getOrgId());
-    if(ads.isEmpty()) {
+    if (ads.isEmpty()) {
       return null;
     }
     return ads.get(0);
@@ -24,7 +24,7 @@ public class AdDao {
   public Ad getAd() {
     String query = "call get_advertisement()";
     List<Ad> ads = queryManager.runQuery(query, Ad.class);
-    if(ads.isEmpty()) {
+    if (ads.isEmpty()) {
       return null;
     }
     return ads.get(0);

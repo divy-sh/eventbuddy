@@ -7,7 +7,6 @@ import com.eventbuddy.eventbuddy.dao.UserDao;
 import com.eventbuddy.eventbuddy.model.Comment;
 import com.eventbuddy.eventbuddy.model.Event;
 import com.eventbuddy.eventbuddy.model.Image;
-import java.lang.reflect.Field;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Comment {
+
   @JsonProperty("email_id")
   private String email;
   @JsonProperty("comment_text")

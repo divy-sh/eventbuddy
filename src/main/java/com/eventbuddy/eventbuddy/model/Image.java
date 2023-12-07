@@ -1,9 +1,9 @@
 package com.eventbuddy.eventbuddy.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.web.bind.annotation.PostMapping;
 
 public class Image {
+
   @JsonProperty("image_id")
   private String imageId;
   @JsonProperty("image_url")

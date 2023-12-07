@@ -11,9 +11,10 @@ public class AdService {
 
   @Autowired
   private AdDao adDao;
+
   public Ad createAd(Ad ad) throws BuddyError {
     Ad result = adDao.createAd(ad);
-    if(result == null) {
+    if (result == null) {
       throw new BuddyError("error in creating ad, please check data");
     }
     return result;
@@ -21,7 +22,7 @@ public class AdService {
 
   public Ad getAd() throws BuddyError {
     Ad result = adDao.getAd();
-    if(result == null) {
+    if (result == null) {
       throw new BuddyError("error in creating ad, please check data");
     }
     return result;

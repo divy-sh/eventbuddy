@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Address {
+
   @JsonProperty("email_id")
   private String emailId;
   @JsonProperty("address_line1")

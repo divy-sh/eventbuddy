@@ -27,7 +27,7 @@ public class AdminService {
       throw new BuddyError("Invalid user");
     }
     Event event = eventDao.getEvent(eventId);
-    if(event == null) {
+    if (event == null) {
       throw new BuddyError("Invalid event");
     }
     adminDao.approveEvent(email, eventId);

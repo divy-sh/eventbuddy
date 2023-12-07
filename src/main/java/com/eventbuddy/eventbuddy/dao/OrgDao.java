@@ -10,6 +10,7 @@ public class OrgDao {
 
   @Autowired
   private QueryManager queryManager;
+
   public Org getOrg(int orgId) {
     String query = "call get_event_org(?)";
     List<Org> org = queryManager.runQuery(query, Org.class, orgId);

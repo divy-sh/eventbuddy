@@ -5,9 +5,7 @@ import com.eventbuddy.eventbuddy.dao.OrgDao;
 import com.eventbuddy.eventbuddy.dao.UserDao;
 import com.eventbuddy.eventbuddy.model.Org;
 import com.eventbuddy.eventbuddy.model.User;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

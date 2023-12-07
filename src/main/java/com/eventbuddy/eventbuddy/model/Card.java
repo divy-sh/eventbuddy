@@ -6,6 +6,7 @@ import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Card {
+
   @JsonProperty("email_id")
   private String email;
   @JsonProperty("credit_card_num")
