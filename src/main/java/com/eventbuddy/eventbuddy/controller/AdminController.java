@@ -22,9 +22,9 @@ public class AdminController {
 
   @GetMapping(value = "approve/event", produces = "application/json")
   public ResponseEntity<?> approveEvent(@RequestParam("email") String email,
-      @RequestParam("event_id") int eventId) {
+      @RequestParam("event_id") int eventId, @RequestParam("status") String status) {
     try {
-      Event event = adminService.approveEvent(email, eventId);
+      Event event = adminService.approveEvent(email, eventId, status);
       return ResponseEntity.ok(event);
     } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
@@ -33,10 +33,10 @@ public class AdminController {
 
   @GetMapping(value = "approve/ad", produces = "application/json")
   public ResponseEntity<?> approveAd(@RequestParam("email") String email,
-      @RequestParam("ad_id") int adId) {
+      @RequestParam("ad_id") int adId, @RequestParam("status") String status) {
     try {
-      Ad ad = adminService.approveAd(email, adId);
-      return ResponseEntity.ok(ad);
+      adminService.approveAd(email, adId, status);
+      return ResponseEntity.ok().build();
     } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
     }

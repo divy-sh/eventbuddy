@@ -22,7 +22,7 @@ public class AdminService {
   @Autowired
   private EventDao eventDao;
 
-  public Event approveEvent(String email, int eventId) throws BuddyError {
+  public Event approveEvent(String email, int eventId, String status) throws BuddyError {
     User admin = userDao.getUserDetail(email);
     if (admin == null || !admin.isAdmin()) {
       throw new BuddyError("Invalid user");
@@ -31,20 +31,16 @@ public class AdminService {
     if (event == null) {
       throw new BuddyError("Invalid event");
     }
-    adminDao.approveEvent(email, eventId);
+    adminDao.approveEvent(email, eventId, status);
     event = eventDao.getEvent(eventId);
     return event;
   }
 
-  public Ad approveAd(String email, int adId) throws BuddyError {
+  public void approveAd(String email, int adId, String status) throws BuddyError {
     User admin = userDao.getUserDetail(email);
     if (admin == null || !admin.isAdmin()) {
       throw new BuddyError("Invalid user");
     }
-    Ad ad = adminDao.approveAd(email, adId);
-    if (ad == null) {
-      throw new BuddyError("error in approving the ad");
-    }
-    return ad;
+    adminDao.approveAd(email, adId, status);
   }
 }

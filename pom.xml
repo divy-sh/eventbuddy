@@ -71,6 +71,10 @@
       <groupId>org.springframework.security</groupId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
   </dependencies>
 
   <description>eventbuddy</description>
