@@ -4,6 +4,7 @@ import com.eventbuddy.eventbuddy.Utils.BuddyError;
 import com.eventbuddy.eventbuddy.Utils.ErrorResponse;
 import com.eventbuddy.eventbuddy.model.Address;
 import com.eventbuddy.eventbuddy.model.Card;
+import com.eventbuddy.eventbuddy.model.Ticket;
 import com.eventbuddy.eventbuddy.model.User;
 import com.eventbuddy.eventbuddy.model.UserToken;
 import com.eventbuddy.eventbuddy.service.UserService;
@@ -101,6 +102,29 @@ public class UserController {
       userService.updatePassword(user);
       return ResponseEntity.ok().build();
     } catch (IllegalArgumentException | BuddyError e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
+    }
+  }
+
+  @PostMapping(value = "delete", produces = "application/json")
+  public ResponseEntity<?> deleteUser(@RequestParam("email_id") String emailId) {
+    try {
+      if(userService.deleteUser(emailId)) {
+        return ResponseEntity.ok().build();
+      } else {
+        throw new BuddyError("user deletion failed");
+      }
+    } catch (IllegalArgumentException | BuddyError e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
+    }
+  }
+
+  @GetMapping(value = "get/ticket", produces = "application/json")
+  public ResponseEntity<?> getTickets(@RequestParam("email_id") String emailId) {
+    try {
+      List<Ticket> tickets = userService.getTickets(emailId);
+      return ResponseEntity.ok(tickets);
+    } catch (IllegalArgumentException e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
     }
   }

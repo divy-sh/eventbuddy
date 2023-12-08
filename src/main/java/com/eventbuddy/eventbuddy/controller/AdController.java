@@ -33,9 +33,9 @@ public class AdController {
   }
 
   @GetMapping(value = "get", produces = "application/json")
-  public ResponseEntity<?> get() {
+  public ResponseEntity<?> get(@RequestParam("status") String status) {
     try {
-      Ad ad = adService.getAd();
+      Ad ad = adService.getRandomAd(status.toUpperCase());
       return ResponseEntity.ok(ad);
     } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));

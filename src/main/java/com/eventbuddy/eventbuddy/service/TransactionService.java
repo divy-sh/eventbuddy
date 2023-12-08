@@ -9,6 +9,7 @@ import com.eventbuddy.eventbuddy.model.Event;
 import com.eventbuddy.eventbuddy.model.Ticket;
 import com.eventbuddy.eventbuddy.model.Transaction;
 import com.eventbuddy.eventbuddy.model.User;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +44,13 @@ public class TransactionService {
     result.setStatus("COMPLETE");
     result = transactionDao.updateTransaction(result);
     return transactionDao.generateTicket(result);
+  }
+
+  public List<Transaction> getUserTransactions(String emailId) throws BuddyError {
+    User user = userDao.getUserDetail(emailId);
+    if (user == null) {
+      throw new BuddyError("invalid user id");
+    }
+    return transactionDao.getUserTransactions(emailId);
   }
 }

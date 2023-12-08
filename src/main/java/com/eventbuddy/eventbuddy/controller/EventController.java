@@ -25,7 +25,7 @@ public class EventController {
   private EventService eventService;
 
   @GetMapping(value = "get", produces = "application/json")
-  public ResponseEntity<?> getEvent(@RequestParam int eventId) {
+  public ResponseEntity<?> getEvent(@RequestParam("event_id") int eventId) {
     try {
       Event event = eventService.get(eventId);
       return ResponseEntity.ok(event);

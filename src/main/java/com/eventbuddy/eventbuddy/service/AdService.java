@@ -4,6 +4,7 @@ import com.eventbuddy.eventbuddy.Utils.BuddyError;
 import com.eventbuddy.eventbuddy.dao.AdDao;
 import com.eventbuddy.eventbuddy.model.Ad;
 import java.util.List;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +22,13 @@ public class AdService {
     return result;
   }
 
-  public Ad getAd() throws BuddyError {
-    Ad result = adDao.getAd();
-    if (result == null) {
-      throw new BuddyError("error in creating ad, please check data");
+  public Ad getRandomAd(String status) throws BuddyError {
+    List<Ad> result = adDao.getAd(status);
+    if (result.isEmpty()) {
+      return null;
     }
-    return result;
+    int randomIndex = new Random().nextInt(result.size());
+    return result.get(randomIndex);
   }
 
   public List<Ad> getAdWithFilter(String approvalStatus) {

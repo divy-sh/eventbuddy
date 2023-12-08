@@ -5,6 +5,7 @@ import com.eventbuddy.eventbuddy.configuration.JwtGenerator;
 import com.eventbuddy.eventbuddy.dao.UserDao;
 import com.eventbuddy.eventbuddy.model.Address;
 import com.eventbuddy.eventbuddy.model.Card;
+import com.eventbuddy.eventbuddy.model.Ticket;
 import com.eventbuddy.eventbuddy.model.User;
 import com.eventbuddy.eventbuddy.model.UserToken;
 import java.util.List;
@@ -97,5 +98,17 @@ public class UserService {
       throw new BuddyError("invalid user email");
     }
     return userDao.getCards(email);
+  }
+
+  public List<Ticket> getTickets(String emailId) {
+    return userDao.getTickets(emailId);
+  }
+
+  public boolean deleteUser(String emailId) {
+    if(userDao.getUserDetail(emailId) == null) {
+      return true;
+    }
+    userDao.deleteAccount(emailId);
+    return userDao.getUserDetail(emailId) == null;
   }
 }

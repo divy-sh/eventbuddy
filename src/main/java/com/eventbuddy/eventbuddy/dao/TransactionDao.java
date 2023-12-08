@@ -39,4 +39,9 @@ public class TransactionDao {
     String query = "call insert_event_ticket()";
     return null;
   }
+
+  public List<Transaction> getUserTransactions(String emailId) {
+    String query = "call get_user_transaction(?)";
+    return queryManager.runQuery(query, Transaction.class, emailId);
+  }
 }

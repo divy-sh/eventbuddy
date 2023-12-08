@@ -2,6 +2,7 @@ package com.eventbuddy.eventbuddy.dao;
 
 import com.eventbuddy.eventbuddy.model.Ad;
 import java.util.List;
+import jdk.jshell.Snippet.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,13 +22,9 @@ public class AdDao {
     return ads.get(0);
   }
 
-  public Ad getAd() {
-    String query = "call get_advertisement()";
-    List<Ad> ads = queryManager.runQuery(query, Ad.class);
-    if (ads.isEmpty()) {
-      return null;
-    }
-    return ads.get(0);
+  public List<Ad> getAd(String status) {
+    String query = "call get_ads_by_status(?)";
+    return queryManager.runQuery(query, Ad.class, status);
   }
 
   public List<Ad> getAdWithApproval(String approvalStatus) {

@@ -3,6 +3,7 @@ package com.eventbuddy.eventbuddy.dao;
 import com.eventbuddy.eventbuddy.Utils.BuddyError;
 import com.eventbuddy.eventbuddy.model.Address;
 import com.eventbuddy.eventbuddy.model.Card;
+import com.eventbuddy.eventbuddy.model.Ticket;
 import com.eventbuddy.eventbuddy.model.User;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class UserDao {
   @Autowired
   private QueryManager queryManager;
 
-  public User getUserDetail(String email) throws BuddyError {
+  public User getUserDetail(String email) {
     String query = "call get_user_detail(?)";
     List<User> users = queryManager.runQuery(query, User.class, email);
     if (users.isEmpty()) {
@@ -78,5 +79,15 @@ public class UserDao {
   public List<Address> getAddress(String emailId) {
     String query = "call get_user_address(?)";
     return queryManager.runQuery(query, Address.class, emailId);
+  }
+
+  public List<Ticket> getTickets(String emailId) {
+    String query = "call get_user_ticket(?)";
+    return queryManager.runQuery(query, Ticket.class, emailId);
+  }
+
+  public void deleteAccount(String emailId) {
+    String query = "call delete_user_credential(?)";
+    queryManager.update(query, emailId);
   }
 }
