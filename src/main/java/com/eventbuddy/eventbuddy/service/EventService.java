@@ -34,18 +34,11 @@ public class EventService {
   }
 
   public Event createEvent(Event request) throws BuddyError {
-    if (eventDao.getEvent(request.getEventId()) != null) {
-      throw new BuddyError("Event already exists");
-    }
     if (orgDao.getOrg(request.getOrgId()) == null) {
       throw new BuddyError("Invalid Org for the event");
     }
     eventDao.createEvent(request);
-    Event event = eventDao.getEvent(request.getEventId());
-    if (event == null) {
-      throw new BuddyError("Event creation failed, please check data");
-    }
-    return event;
+    return request;
   }
 
   public Comment addComment(Comment request) throws BuddyError {
