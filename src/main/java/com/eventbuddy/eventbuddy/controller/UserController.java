@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -106,10 +107,10 @@ public class UserController {
     }
   }
 
-  @PostMapping(value = "delete", produces = "application/json")
+  @DeleteMapping(value = "delete", produces = "application/json")
   public ResponseEntity<?> deleteUser(@RequestParam("email_id") String emailId) {
     try {
-      if(userService.deleteUser(emailId)) {
+      if (userService.deleteUser(emailId)) {
         return ResponseEntity.ok().build();
       } else {
         throw new BuddyError("user deletion failed");

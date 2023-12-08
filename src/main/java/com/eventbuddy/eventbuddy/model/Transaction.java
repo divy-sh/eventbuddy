@@ -27,8 +27,8 @@ public class Transaction {
   @JsonProperty("id_proof")
   private String id_proof;
 
-  @JsonProperty("total_cost")
-  private float totalCost;
+  @JsonProperty("total_tickets")
+  private int total_tickets;
 
   public LocalDateTime getTime() {
     return time;
@@ -78,12 +78,12 @@ public class Transaction {
     this.id_proof = id_proof;
   }
 
-  public float getTotalCost() {
-    return totalCost;
+  public float getTotalTickets() {
+    return total_tickets;
   }
 
-  public void setTotalCost(float totalCost) {
-    this.totalCost = totalCost;
+  public void setTotalTickets(int total_tickets) {
+    this.total_tickets = total_tickets;
   }
 
   public int getTransactionId() {

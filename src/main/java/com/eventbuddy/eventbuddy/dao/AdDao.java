@@ -2,7 +2,6 @@ package com.eventbuddy.eventbuddy.dao;
 
 import com.eventbuddy.eventbuddy.model.Ad;
 import java.util.List;
-import jdk.jshell.Snippet.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -30,5 +29,22 @@ public class AdDao {
   public List<Ad> getAdWithApproval(String approvalStatus) {
     String query = "call get_ad_by_status(?)";
     return queryManager.runQuery(query, Ad.class, approvalStatus);
+  }
+
+  public void delete(int adId) {
+    String query = "call delete_ads(?)";
+    queryManager.update(query, adId);
+  }
+
+  public Ad update(Ad ad) {
+    String query = "call update_advertisement(?, ?, ?, ?, ?, ?)";
+    List<Ad> ads =
+        queryManager.runQuery(query, Ad.class, ad.getAdId(), ad.getAdTitle(),
+            ad.getAdImageLocation(),
+            ad.getBeginTime(), ad.getEndTime(), ad.getOrgId());
+    if (ads.isEmpty()) {
+      return null;
+    }
+    return ads.get(0);
   }
 }

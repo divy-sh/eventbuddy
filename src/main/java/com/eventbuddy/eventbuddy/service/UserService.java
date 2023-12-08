@@ -105,7 +105,7 @@ public class UserService {
   }
 
   public boolean deleteUser(String emailId) {
-    if(userDao.getUserDetail(emailId) == null) {
+    if (userDao.getUserDetail(emailId) == null) {
       return true;
     }
     userDao.deleteAccount(emailId);

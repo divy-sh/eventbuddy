@@ -2,7 +2,6 @@ package com.eventbuddy.eventbuddy.controller;
 
 import com.eventbuddy.eventbuddy.Utils.BuddyError;
 import com.eventbuddy.eventbuddy.Utils.ErrorResponse;
-import com.eventbuddy.eventbuddy.model.Ticket;
 import com.eventbuddy.eventbuddy.model.Transaction;
 import com.eventbuddy.eventbuddy.service.TransactionService;
 import java.util.List;
@@ -26,7 +25,7 @@ public class TransactionController {
   @PostMapping(value = "buy/ticket", produces = "application/json")
   public ResponseEntity<?> buyTicket(@RequestBody Transaction transaction) {
     try {
-      Ticket result = transactionService.buyTicket(transaction);
+      Transaction result = transactionService.buyTicket(transaction);
       return ResponseEntity.ok(result);
     } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));

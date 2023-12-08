@@ -6,7 +6,6 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
           <mainClass>com.eventbuddy.eventbuddy.EventBuddyApplication</mainClass>
@@ -18,6 +17,7 @@
             </goals>
           </execution>
         </executions>
+        <groupId>org.springframework.boot</groupId>
       </plugin>
     </plugins>
   </build>
@@ -55,8 +55,8 @@
       <version>2.13.0</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-shade-plugin</artifactId>
+      <groupId>org.apache.maven.plugins</groupId>
       <version>3.5.1</version>
     </dependency>
 

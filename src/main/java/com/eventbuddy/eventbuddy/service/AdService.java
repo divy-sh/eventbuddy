@@ -34,4 +34,17 @@ public class AdService {
   public List<Ad> getAdWithFilter(String approvalStatus) {
     return adDao.getAdWithApproval(approvalStatus.toUpperCase());
   }
+
+  public boolean delete(int adId) {
+    adDao.delete(adId);
+    return true;
+  }
+
+  public Ad update(Ad ad) throws BuddyError {
+    Ad re = adDao.update(ad);
+    if (re == null) {
+      throw new BuddyError("ad update failed");
+    }
+    return re;
+  }
 }

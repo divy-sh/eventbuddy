@@ -62,4 +62,13 @@ public class OrgService {
     }
     orgDao.addUserToOrg(orgId, email);
   }
+
+  public boolean delete(int orgId) throws BuddyError {
+    Org org = orgDao.getOrg(orgId);
+    if (org == null) {
+      throw new BuddyError("invalid org id");
+    }
+    orgDao.delete(orgId);
+    return true;
+  }
 }

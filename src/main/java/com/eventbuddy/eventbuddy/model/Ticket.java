@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Ticket {
+
   @JsonProperty("ticket_id")
   private int ticketId;
   @JsonProperty("ticket_user_name")

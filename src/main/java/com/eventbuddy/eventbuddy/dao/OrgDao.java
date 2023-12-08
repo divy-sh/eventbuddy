@@ -34,4 +34,9 @@ public class OrgDao {
     String query = "call insert_event_org_team(?, ?)";
     queryManager.update(query, orgId, email);
   }
+
+  public void delete(int orgId) {
+    String query = "call delete_event_org(?)";
+    queryManager.update(query, orgId);
+  }
 }
