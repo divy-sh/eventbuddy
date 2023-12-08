@@ -2,6 +2,7 @@ package com.eventbuddy.eventbuddy.controller;
 
 import com.eventbuddy.eventbuddy.Utils.BuddyError;
 import com.eventbuddy.eventbuddy.Utils.ErrorResponse;
+import com.eventbuddy.eventbuddy.model.Ad;
 import com.eventbuddy.eventbuddy.model.Event;
 import com.eventbuddy.eventbuddy.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,22 @@ public class AdminController {
   private AdminService adminService;
 
   @GetMapping(value = "approve/event", produces = "application/json")
-  public ResponseEntity<?> get(@RequestParam("email") String email,
+  public ResponseEntity<?> approveEvent(@RequestParam("email") String email,
       @RequestParam("event_id") int eventId) {
     try {
       Event event = adminService.approveEvent(email, eventId);
       return ResponseEntity.ok(event);
+    } catch (IllegalArgumentException | BuddyError e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
+    }
+  }
+
+  @GetMapping(value = "approve/ad", produces = "application/json")
+  public ResponseEntity<?> approveAd(@RequestParam("email") String email,
+      @RequestParam("ad_id") int adId) {
+    try {
+      Ad ad = adminService.approveAd(email, adId);
+      return ResponseEntity.ok(ad);
     } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
     }

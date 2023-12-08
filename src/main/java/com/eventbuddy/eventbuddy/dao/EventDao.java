@@ -31,9 +31,9 @@ public class EventDao {
     return queryManager.runQuery(query, Event.class);
   }
 
-  public List<Event> getApprovedEvents() {
-    String query = "call get_all_approved_events()";
-    return queryManager.runQuery(query, Event.class);
+  public List<Event> getEventsByStatus(String status) {
+    String query = "call get_events_by_status(?)";
+    return queryManager.runQuery(query, Event.class, status);
   }
 
   public void createEvent(Event event) {

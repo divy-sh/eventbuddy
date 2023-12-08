@@ -64,19 +64,19 @@ public class UserDao {
     queryManager.update(query, user.getPassword(), user.getEmail());
   }
 
-  public void addAddress(Address request) {
+  public Address addAddress(Address request) {
     String query = "call insert_user_address(?, ?, ?, ?, ?, ?, ?)";
-    queryManager.update(query, request.getEmailId(), request.getAddressLine1(),
-        request.getAddressLine2(), request.getCity(), request.getState(), request.getZipCode(),
-        request.getCountry());
-  }
-
-  public Address getAddress(String emailId) {
-    String query = "call get_user_address(?)";
-    List<Address> addresses = queryManager.runQuery(query, Address.class, emailId);
+    List<Address> addresses = queryManager.runQuery(query, Address.class, request.getEmailId(),
+        request.getAddressLine1(), request.getAddressLine2(), request.getCity(), request.getState(),
+        request.getZipCode(), request.getCountry());
     if (addresses.isEmpty()) {
       return null;
     }
     return addresses.get(0);
+  }
+
+  public List<Address> getAddress(String emailId) {
+    String query = "call get_user_address(?)";
+    return queryManager.runQuery(query, Address.class, emailId);
   }
 }

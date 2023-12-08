@@ -35,19 +35,9 @@ public class EventController {
   }
 
   @GetMapping(value = "get/all", produces = "application/json")
-  public ResponseEntity<?> getEvents() {
+  public ResponseEntity<?> getEventsByStatus(@RequestParam("status") String approval) {
     try {
-      List<Event> events = eventService.getEvents();
-      return ResponseEntity.ok(events);
-    } catch (IllegalArgumentException | BuddyError e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
-    }
-  }
-
-  @GetMapping(value = "get/all/approved", produces = "application/json")
-  public ResponseEntity<?> getApprovedEvents() {
-    try {
-      List<Event> events = eventService.getAllApprovedEvents();
+      List<Event> events = eventService.getEventsByStatus(approval);
       return ResponseEntity.ok(events);
     } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));

@@ -4,6 +4,7 @@ import com.eventbuddy.eventbuddy.Utils.BuddyError;
 import com.eventbuddy.eventbuddy.dao.AdminDao;
 import com.eventbuddy.eventbuddy.dao.EventDao;
 import com.eventbuddy.eventbuddy.dao.UserDao;
+import com.eventbuddy.eventbuddy.model.Ad;
 import com.eventbuddy.eventbuddy.model.Event;
 import com.eventbuddy.eventbuddy.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,19 @@ public class AdminService {
       throw new BuddyError("Invalid event");
     }
     adminDao.approveEvent(email, eventId);
+    event = eventDao.getEvent(eventId);
     return event;
+  }
+
+  public Ad approveAd(String email, int adId) throws BuddyError {
+    User admin = userDao.getUserDetail(email);
+    if (admin == null || !admin.isAdmin()) {
+      throw new BuddyError("Invalid user");
+    }
+    Ad ad = adminDao.approveAd(email, adId);
+    if (ad == null) {
+      throw new BuddyError("error in approving the ad");
+    }
+    return ad;
   }
 }

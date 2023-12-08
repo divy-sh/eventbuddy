@@ -7,6 +7,7 @@ import com.eventbuddy.eventbuddy.model.Card;
 import com.eventbuddy.eventbuddy.model.User;
 import com.eventbuddy.eventbuddy.model.UserToken;
 import com.eventbuddy.eventbuddy.service.UserService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,10 +65,30 @@ public class UserController {
     }
   }
 
+  @GetMapping(value = "get/card", produces = "application/json")
+  public ResponseEntity<?> getUserCard(@RequestParam("email") String email) {
+    try {
+      List<Card> result = userService.getCard(email);
+      return ResponseEntity.ok(result);
+    } catch (IllegalArgumentException | BuddyError e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
+    }
+  }
+
   @PostMapping(value = "add/address", produces = "application/json")
   public ResponseEntity<?> addAddress(@RequestBody Address request) {
     try {
       Address result = userService.addAddress(request);
+      return ResponseEntity.ok(result);
+    } catch (IllegalArgumentException | BuddyError e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
+    }
+  }
+
+  @GetMapping(value = "get/address", produces = "application/json")
+  public ResponseEntity<?> getUserAddress(@RequestParam("email") String email) {
+    try {
+      List<Address> result = userService.getAddress(email);
       return ResponseEntity.ok(result);
     } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));

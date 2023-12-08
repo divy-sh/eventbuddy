@@ -29,4 +29,9 @@ public class AdDao {
     }
     return ads.get(0);
   }
+
+  public List<Ad> getAdWithApproval(String approvalStatus) {
+    String query = "call get_ad_by_status(?)";
+    return queryManager.runQuery(query, Ad.class, approvalStatus);
+  }
 }

@@ -3,6 +3,7 @@ package com.eventbuddy.eventbuddy.service;
 import com.eventbuddy.eventbuddy.Utils.BuddyError;
 import com.eventbuddy.eventbuddy.dao.AdDao;
 import com.eventbuddy.eventbuddy.model.Ad;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,9 @@ public class AdService {
       throw new BuddyError("error in creating ad, please check data");
     }
     return result;
+  }
+
+  public List<Ad> getAdWithFilter(String approvalStatus) {
+    return adDao.getAdWithApproval(approvalStatus.toUpperCase());
   }
 }

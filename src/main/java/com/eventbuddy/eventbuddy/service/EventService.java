@@ -33,14 +33,6 @@ public class EventService {
     return events;
   }
 
-  public List<Event> getAllApprovedEvents() throws BuddyError {
-    List<Event> events = eventDao.getApprovedEvents();
-    if (events.isEmpty()) {
-      throw new BuddyError("no events found");
-    }
-    return events;
-  }
-
   public Event createEvent(Event request) throws BuddyError {
     if (eventDao.getEvent(request.getEventId()) != null) {
       throw new BuddyError("Event already exists");
@@ -99,5 +91,9 @@ public class EventService {
       throw new BuddyError("error in getting event images");
     }
     return result;
+  }
+
+  public List<Event> getEventsByStatus(String status) throws BuddyError {
+    return eventDao.getEventsByStatus(status.toUpperCase());
   }
 }

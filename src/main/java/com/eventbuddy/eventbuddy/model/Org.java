@@ -10,10 +10,10 @@ public class Org {
   private int orgId;
 
   @JsonProperty("org_desc")
-  private int orgDesc;
+  private String orgDesc;
 
   @JsonProperty("org_name")
-  private int orgName;
+  private String orgName;
 
   public int getOrgId() {
     return orgId;
@@ -23,19 +23,19 @@ public class Org {
     this.orgId = orgId;
   }
 
-  public int getOrgDesc() {
+  public String getOrgDesc() {
     return orgDesc;
   }
 
-  public void setOrgDesc(int orgDesc) {
+  public void setOrgDesc(String orgDesc) {
     this.orgDesc = orgDesc;
   }
 
-  public int getOrgName() {
+  public String getOrgName() {
     return orgName;
   }
 
-  public void setOrgName(int orgName) {
+  public void setOrgName(String orgName) {
     this.orgName = orgName;
   }
 }

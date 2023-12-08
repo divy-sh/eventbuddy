@@ -7,6 +7,7 @@ import com.eventbuddy.eventbuddy.model.Address;
 import com.eventbuddy.eventbuddy.model.Card;
 import com.eventbuddy.eventbuddy.model.User;
 import com.eventbuddy.eventbuddy.model.UserToken;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -59,7 +60,7 @@ public class UserService {
     userDao.addCard(request);
     Card card = userDao.getCard(request.getCardNumber());
     if (card == null) {
-      throw new BuddyError("error in adding the card, please check dara");
+      throw new BuddyError("error in adding the card, please check data");
     }
     return card;
   }
@@ -77,10 +78,24 @@ public class UserService {
       throw new BuddyError("invalid user email");
     }
     userDao.addAddress(request);
-    Address address = userDao.getAddress(request.getEmailId());
+    Address address = userDao.addAddress(request);
     if (address == null) {
       throw new BuddyError("error in adding the card, please check dara");
     }
     return address;
+  }
+
+  public List<Address> getAddress(String email) throws BuddyError {
+    if (userDao.getUserDetail(email) == null) {
+      throw new BuddyError("invalid user email");
+    }
+    return userDao.getAddress(email);
+  }
+
+  public List<Card> getCard(String email) throws BuddyError {
+    if (userDao.getUserDetail(email) == null) {
+      throw new BuddyError("invalid user email");
+    }
+    return userDao.getCards(email);
   }
 }
