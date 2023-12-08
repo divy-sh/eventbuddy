@@ -55,8 +55,8 @@ public class EventDao {
   }
 
   public void updateEvent(Event event) {
-    String query = "call update_event_record(?, ?, ?, ?, ?, ?, ?, ?)";
-    queryManager.update(query, event.getEventName(), event.getEventDescription(),
+    String query = "call update_event_record(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    queryManager.update(query, event.getEventId(), event.getEventName(), event.getEventDescription(),
         event.getEventStart(), event.getEventEnd(), event.getLastRegistrationDate(),
         event.getCapacity(), event.getEntryFee(), event.getOrgId());
   }
