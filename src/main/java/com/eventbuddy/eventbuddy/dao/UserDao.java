@@ -43,7 +43,7 @@ public class UserDao {
   public void addCard(Card card) {
     String query = "call insert_credit_card(?, ?, ?, ?)";
     queryManager.update(query, card.getCardNumber(), card.getExpiryDate(), card.getName(),
-        card.getExpiryDate());
+        card.getEmail());
   }
 
   public Card getCard(String cardNumber) throws BuddyError {
@@ -56,13 +56,13 @@ public class UserDao {
   }
 
   public List<Card> getCards(String email) throws BuddyError {
-    String query = "call get_credit_card_by_email(?)";
+    String query = "call get_cc_email_id(?)";
     return queryManager.runQuery(query, Card.class, email);
   }
 
   public void updatePassword(User user) {
-    String query = "call get_credit_card_by_email(?)";
-    queryManager.update(query, user.getPassword(), user.getEmail());
+    String query = "call update_user_credential(?, ?)";
+    queryManager.update(query, user.getEmail(), user.getPassword());
   }
 
   public Address addAddress(Address request) throws BuddyError {
