@@ -35,7 +35,7 @@ public class AdService {
     return adDao.getAdWithApproval(approvalStatus.toUpperCase());
   }
 
-  public boolean delete(int adId) {
+  public boolean delete(int adId) throws BuddyError {
     adDao.delete(adId);
     return true;
   }

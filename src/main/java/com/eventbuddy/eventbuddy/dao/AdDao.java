@@ -23,11 +23,11 @@ public class AdDao {
   }
 
   public List<Ad> getAdWithApproval(String approvalStatus) throws BuddyError {
-    String query = "call get_ad_by_status(?)";
+    String query = "call get_ads_by_status(?)";
     return queryManager.runQuery(query, Ad.class, approvalStatus);
   }
 
-  public void delete(int adId) {
+  public void delete(int adId) throws BuddyError {
     String query = "call delete_ads(?)";
     queryManager.update(query, adId);
   }

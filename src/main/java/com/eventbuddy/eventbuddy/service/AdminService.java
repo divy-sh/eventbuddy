@@ -6,7 +6,9 @@ import com.eventbuddy.eventbuddy.dao.EventDao;
 import com.eventbuddy.eventbuddy.dao.UserDao;
 import com.eventbuddy.eventbuddy.model.Ad;
 import com.eventbuddy.eventbuddy.model.Event;
+import com.eventbuddy.eventbuddy.model.TransactionData;
 import com.eventbuddy.eventbuddy.model.User;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +46,7 @@ public class AdminService {
     adminDao.approveAd(email, adId, status);
   }
 
-  public void getTransactionData() {
-    adminDao.getTransactionData();
+  public List<TransactionData> getTransactionData() throws BuddyError {
+    return adminDao.getTransactionData();
   }
 }

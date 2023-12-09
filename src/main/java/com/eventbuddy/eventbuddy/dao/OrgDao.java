@@ -21,22 +21,22 @@ public class OrgDao {
     return org.getFirst();
   }
 
-  public List<Org> getOrgs(String email) {
+  public List<Org> getOrgs(String email) throws BuddyError {
     String query = "call get_all_orgs(email)";
     return queryManager.runQuery(query, Org.class);
   }
 
-  public void createOrg(Org org, String email) {
+  public void createOrg(Org org, String email) throws BuddyError {
     String query = "call insert_event_org(?, ?, ?)";
     queryManager.update(query, email, org.getOrgName(), org.getOrgDesc());
   }
 
-  public void addUserToOrg(int orgId, String email) {
+  public void addUserToOrg(int orgId, String email) throws BuddyError {
     String query = "call insert_event_org_team(?, ?)";
     queryManager.update(query, orgId, email);
   }
 
-  public void delete(int orgId) {
+  public void delete(int orgId) throws BuddyError {
     String query = "call delete_event_org(?)";
     queryManager.update(query, orgId);
   }

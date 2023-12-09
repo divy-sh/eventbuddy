@@ -4,7 +4,9 @@ import com.eventbuddy.eventbuddy.Utils.BuddyError;
 import com.eventbuddy.eventbuddy.Utils.ErrorResponse;
 import com.eventbuddy.eventbuddy.model.Ad;
 import com.eventbuddy.eventbuddy.model.Event;
+import com.eventbuddy.eventbuddy.model.TransactionData;
 import com.eventbuddy.eventbuddy.service.AdminService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,9 +47,9 @@ public class AdminController {
   @GetMapping(value = "get/transaction/data", produces = "application/json")
   public ResponseEntity<?> getTransactionData() {
     try {
-      adminService.getTransactionData();
-      return ResponseEntity.ok().build();
-    } catch (IllegalArgumentException e) {
+      List<TransactionData> td = adminService.getTransactionData();
+      return ResponseEntity.ok(td);
+    } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
     }
   }

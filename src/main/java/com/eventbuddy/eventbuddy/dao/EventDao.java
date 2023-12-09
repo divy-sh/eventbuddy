@@ -26,7 +26,7 @@ public class EventDao {
     return events.getFirst();
   }
 
-  public List<Event> getEvents() {
+  public List<Event> getEvents() throws BuddyError {
     String query = "call get_all_events()";
     return queryManager.runQuery(query, Event.class);
   }
@@ -36,14 +36,14 @@ public class EventDao {
     return queryManager.runQuery(query, Event.class, status);
   }
 
-  public void createEvent(Event event) {
+  public void createEvent(Event event) throws BuddyError {
     String query = "call insert_event_record(?, ?, ?, ?, ?, ?, ?, ?)";
     queryManager.update(query, event.getEventName(), event.getEventDescription(),
         event.getEventStart(), event.getEventEnd(), event.getLastRegistrationDate(),
         event.getCapacity(), event.getEntryFee(), event.getOrgId());
   }
 
-  public void addComment(Comment request) {
+  public void addComment(Comment request) throws BuddyError {
     String query = "call insert_event_comment(?, ?, ?, ?)";
     queryManager.update(query, request.getCommentText(), request.getTime(), request.getEmail(),
         request.getEventId());
@@ -54,7 +54,7 @@ public class EventDao {
     return queryManager.runQuery(query, Comment.class, eventId);
   }
 
-  public void updateEvent(Event event) {
+  public void updateEvent(Event event) throws BuddyError {
     String query = "call update_event_record(?, ?, ?, ?, ?, ?, ?, ?, ?)";
     queryManager.update(query, event.getEventId(), event.getEventName(), event.getEventDescription(),
         event.getEventStart(), event.getEventEnd(), event.getLastRegistrationDate(),

@@ -33,14 +33,14 @@ public class UserDao {
     return users.getFirst();
   }
 
-  public void registerUser(User user) {
+  public void registerUser(User user) throws BuddyError {
     String query = "call insert_user(?, ?, ?, ?, ?, ?, ?, ?, ?)";
     queryManager.update(query, user.getEmail(), user.getPassword(),
         user.getFirstName(), user.getLastName(), user.getDateOfBirth(), null, null, false,
         user.isOrganizer());
   }
 
-  public void addCard(Card card) {
+  public void addCard(Card card) throws BuddyError {
     String query = "call insert_credit_card(?, ?, ?, ?)";
     queryManager.update(query, card.getCardNumber(), card.getExpiryDate(), card.getName(),
         card.getEmail());
@@ -60,7 +60,7 @@ public class UserDao {
     return queryManager.runQuery(query, Card.class, email);
   }
 
-  public void updatePassword(User user) {
+  public void updatePassword(User user) throws BuddyError {
     String query = "call update_user_credential(?, ?)";
     queryManager.update(query, user.getEmail(), user.getPassword());
   }
@@ -86,7 +86,7 @@ public class UserDao {
     return queryManager.runQuery(query, Ticket.class, emailId);
   }
 
-  public void deleteAccount(String emailId) {
+  public void deleteAccount(String emailId) throws BuddyError {
     String query = "call delete_user_credential(?)";
     queryManager.update(query, emailId);
   }

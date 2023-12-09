@@ -76,7 +76,7 @@ public class AdController {
     }
   }
 
-  @GetMapping(value = "update", produces = "application/json")
+  @PostMapping(value = "update", produces = "application/json")
   public ResponseEntity<?> update(@RequestBody Ad ad) {
     try {
       Ad result = adService.update(ad);

@@ -28,26 +28,56 @@ public class QueryManager {
       }
       return processRowSet(rowSet, classType);
     } catch (Exception e) {
-      throw new BuddyError(e.getCause().getMessage());
+      if (e.getCause() instanceof SQLException) {
+        throw new BuddyError(e.getCause().getMessage());
+      }
+      throw new BuddyError(e.getMessage());
     }
-
   }
 
-  public <T> List<T> runQuery(String query, Class<T> classType) {
-    SqlRowSet rowSet = jdbcTemplate.queryForRowSet(query);
-    return processRowSet(rowSet, classType);
+  public <T> List<T> runQuery(String query, Class<T> classType) throws BuddyError {
+    try {
+      SqlRowSet rowSet = jdbcTemplate.queryForRowSet(query);
+      return processRowSet(rowSet, classType);
+    } catch (Exception e) {
+      if (e.getCause() instanceof SQLException) {
+        throw new BuddyError(e.getCause().getMessage());
+      }
+      throw new BuddyError(e.getMessage());
+    }
   }
 
-  public void execute(String query) {
-    jdbcTemplate.execute(query);
+  public void execute(String query) throws BuddyError {
+    try {
+      jdbcTemplate.execute(query);
+    } catch (Exception e) {
+      if (e.getCause() instanceof SQLException) {
+        throw new BuddyError(e.getCause().getMessage());
+      }
+      throw new BuddyError(e.getMessage());
+    }
   }
 
-  public int update(String query) {
-    return jdbcTemplate.update(query);
+  public int update(String query) throws BuddyError {
+    try {
+      return jdbcTemplate.update(query);
+    } catch (Exception e) {
+      if (e.getCause() instanceof SQLException) {
+        throw new BuddyError(e.getCause().getMessage());
+      }
+      throw new BuddyError(e.getMessage());
+    }
   }
 
-  public int update(String query, Object... params) {
+  public int update(String query, Object... params) throws BuddyError {
+    try {
     return jdbcTemplate.update(query, params);
+    } catch (Exception e) {
+      if (e.getCause() instanceof SQLException) {
+        throw new BuddyError(e.getCause().getMessage());
+      }
+      throw new BuddyError(e.getMessage());
+    }
   }
 
   private <T> List<T> processRowSet(SqlRowSet rowSet, Class<T> classType) {

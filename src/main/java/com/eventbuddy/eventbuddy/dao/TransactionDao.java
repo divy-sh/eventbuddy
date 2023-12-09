@@ -39,7 +39,7 @@ public class TransactionDao {
     return fin.getFirst();
   }
 
-  public void failTransaction(Transaction result) {
+  public void failTransaction(Transaction result) throws BuddyError {
     String query = "call failed_user_transaction(?, ?)";
     queryManager.update(query, new Date(), result.getTransactionId());
   }
