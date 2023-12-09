@@ -43,4 +43,8 @@ public class AdminService {
     }
     adminDao.approveAd(email, adId, status);
   }
+
+  public void getTransactionData() {
+    adminDao.getTransactionData();
+  }
 }

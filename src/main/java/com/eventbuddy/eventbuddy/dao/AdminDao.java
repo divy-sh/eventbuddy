@@ -1,6 +1,7 @@
 package com.eventbuddy.eventbuddy.dao;
 
 import com.eventbuddy.eventbuddy.model.Ad;
+import com.eventbuddy.eventbuddy.model.TransactionData;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,10 @@ public class AdminDao {
   public void approveAd(String email, int adId, String status) {
     String query = "call insert_ad_approval(?, ?, ?, ?, ?)";
     queryManager.update(query, adId, new Date(), status.toUpperCase(), "", email);
+  }
+
+  public List<TransactionData> getTransactionData() {
+    String query = "call get_transaction_data()";
+    return queryManager.runQuery(query, TransactionData.class);
   }
 }

@@ -41,4 +41,14 @@ public class AdminController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
     }
   }
+
+  @GetMapping(value = "get/transaction/data", produces = "application/json")
+  public ResponseEntity<?> getTransactionData() {
+    try {
+      adminService.getTransactionData();
+      return ResponseEntity.ok().build();
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
+    }
+  }
 }
