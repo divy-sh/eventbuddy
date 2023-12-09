@@ -125,7 +125,7 @@ public class UserController {
     try {
       List<Ticket> tickets = userService.getTickets(emailId);
       return ResponseEntity.ok(tickets);
-    } catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
     }
   }

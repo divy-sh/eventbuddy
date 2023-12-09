@@ -23,7 +23,7 @@ public class EventDao {
     if (events.isEmpty()) {
       return null;
     }
-    return events.get(0);
+    return events.getFirst();
   }
 
   public List<Event> getEvents() {
@@ -31,7 +31,7 @@ public class EventDao {
     return queryManager.runQuery(query, Event.class);
   }
 
-  public List<Event> getEventsByStatus(String status) {
+  public List<Event> getEventsByStatus(String status) throws BuddyError {
     String query = "call get_events_by_status(?)";
     return queryManager.runQuery(query, Event.class, status);
   }
@@ -49,7 +49,7 @@ public class EventDao {
         request.getEventId());
   }
 
-  public List<Comment> getComment(int eventId) {
+  public List<Comment> getComment(int eventId) throws BuddyError {
     String query = "call get_event_comment(?)";
     return queryManager.runQuery(query, Comment.class, eventId);
   }
@@ -61,17 +61,22 @@ public class EventDao {
         event.getCapacity(), event.getEntryFee(), event.getOrgId());
   }
 
-  public List<Image> getImage(int eventId) {
+  public List<Image> getImage(int eventId) throws BuddyError {
     String query = "call get_event_images(?)";
     return queryManager.runQuery(query, Image.class, eventId);
   }
 
-  public Image addImage(int eventId, String imageUrl) {
+  public Image addImage(int eventId, String imageUrl) throws BuddyError {
     String query = "call insert_event_image(?, ?)";
     List<Image> images = queryManager.runQuery(query, Image.class, imageUrl, eventId);
     if (images.isEmpty()) {
       return null;
     }
-    return images.get(0);
+    return images.getFirst();
+  }
+
+  public List<Event> getEventsByStatusAndOrg(String upperCase, int orgId) throws BuddyError {
+    String query = "call get_events_by_org_id(?, ?)";
+    return queryManager.runQuery(query, Event.class, upperCase, orgId);
   }
 }

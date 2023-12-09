@@ -15,13 +15,13 @@ public class UserDao {
   @Autowired
   private QueryManager queryManager;
 
-  public User getUserDetail(String email) {
+  public User getUserDetail(String email) throws BuddyError {
     String query = "call get_user_detail(?)";
     List<User> users = queryManager.runQuery(query, User.class, email);
     if (users.isEmpty()) {
       return null;
     }
-    return users.get(0);
+    return users.getFirst();
   }
 
   public User getUserCredential(String email) throws BuddyError {
@@ -30,7 +30,7 @@ public class UserDao {
     if (users.isEmpty()) {
       return null;
     }
-    return users.get(0);
+    return users.getFirst();
   }
 
   public void registerUser(User user) {
@@ -46,16 +46,16 @@ public class UserDao {
         card.getExpiryDate());
   }
 
-  public Card getCard(String cardNumber) {
+  public Card getCard(String cardNumber) throws BuddyError {
     String query = "call get_cc_num(?)";
     List<Card> cards = queryManager.runQuery(query, Card.class, cardNumber);
     if (cards.isEmpty()) {
       return null;
     }
-    return cards.get(0);
+    return cards.getFirst();
   }
 
-  public List<Card> getCards(String email) {
+  public List<Card> getCards(String email) throws BuddyError {
     String query = "call get_credit_card_by_email(?)";
     return queryManager.runQuery(query, Card.class, email);
   }
@@ -65,7 +65,7 @@ public class UserDao {
     queryManager.update(query, user.getPassword(), user.getEmail());
   }
 
-  public Address addAddress(Address request) {
+  public Address addAddress(Address request) throws BuddyError {
     String query = "call insert_user_address(?, ?, ?, ?, ?, ?, ?)";
     List<Address> addresses = queryManager.runQuery(query, Address.class, request.getEmailId(),
         request.getAddressLine1(), request.getAddressLine2(), request.getCity(), request.getState(),
@@ -73,15 +73,15 @@ public class UserDao {
     if (addresses.isEmpty()) {
       return null;
     }
-    return addresses.get(0);
+    return addresses.getFirst();
   }
 
-  public List<Address> getAddress(String emailId) {
+  public List<Address> getAddress(String emailId) throws BuddyError {
     String query = "call get_user_address(?)";
     return queryManager.runQuery(query, Address.class, emailId);
   }
 
-  public List<Ticket> getTickets(String emailId) {
+  public List<Ticket> getTickets(String emailId) throws BuddyError {
     String query = "call get_user_ticket(?)";
     return queryManager.runQuery(query, Ticket.class, emailId);
   }

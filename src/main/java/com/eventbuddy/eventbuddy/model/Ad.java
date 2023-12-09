@@ -1,8 +1,10 @@
 package com.eventbuddy.eventbuddy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Ad {
 
   @JsonProperty("ad_id")

@@ -1,5 +1,6 @@
 package com.eventbuddy.eventbuddy.dao;
 
+import com.eventbuddy.eventbuddy.Utils.BuddyError;
 import com.eventbuddy.eventbuddy.model.Org;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,13 @@ public class OrgDao {
   @Autowired
   private QueryManager queryManager;
 
-  public Org getOrg(int orgId) {
+  public Org getOrg(int orgId) throws BuddyError {
     String query = "call get_event_org(?)";
     List<Org> org = queryManager.runQuery(query, Org.class, orgId);
     if (org.isEmpty()) {
       return null;
     }
-    return org.get(0);
+    return org.getFirst();
   }
 
   public List<Org> getOrgs(String email) {

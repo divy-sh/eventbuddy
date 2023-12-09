@@ -1,7 +1,9 @@
 package com.eventbuddy.eventbuddy.dao;
 
+import com.eventbuddy.eventbuddy.Utils.BuddyError;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,12 +19,18 @@ public class QueryManager {
   @Autowired
   JdbcTemplate jdbcTemplate;
 
-  public <T> List<T> runQuery(String query, Class<T> classType, Object... params) {
-    SqlRowSet rowSet = jdbcTemplate.queryForRowSet(query, (Object[]) params);
-    if (classType == null) {
-      return null;
+  public <T> List<T> runQuery(String query, Class<T> classType, Object... params)
+      throws BuddyError {
+    try {
+      SqlRowSet rowSet = jdbcTemplate.queryForRowSet(query, (Object[]) params);
+      if (classType == null) {
+        return null;
+      }
+      return processRowSet(rowSet, classType);
+    } catch (Exception e) {
+      throw new BuddyError(e.getCause().getMessage());
     }
-    return processRowSet(rowSet, classType);
+
   }
 
   public <T> List<T> runQuery(String query, Class<T> classType) {

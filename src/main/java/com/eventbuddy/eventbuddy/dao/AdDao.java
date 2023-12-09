@@ -1,5 +1,6 @@
 package com.eventbuddy.eventbuddy.dao;
 
+import com.eventbuddy.eventbuddy.Utils.BuddyError;
 import com.eventbuddy.eventbuddy.model.Ad;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,22 +12,17 @@ public class AdDao {
   @Autowired
   private QueryManager queryManager;
 
-  public Ad createAd(Ad ad) {
+  public Ad createAd(Ad ad) throws BuddyError {
     String query = "call insert_advertisement(?, ?, ?, ?, ?)";
     List<Ad> ads = queryManager.runQuery(query, Ad.class, ad.getAdTitle(), ad.getAdImageLocation(),
         ad.getBeginTime(), ad.getEndTime(), ad.getOrgId());
     if (ads.isEmpty()) {
       return null;
     }
-    return ads.get(0);
+    return ads.getFirst();
   }
 
-  public List<Ad> getAd(String status) {
-    String query = "call get_ads_by_status(?)";
-    return queryManager.runQuery(query, Ad.class, status);
-  }
-
-  public List<Ad> getAdWithApproval(String approvalStatus) {
+  public List<Ad> getAdWithApproval(String approvalStatus) throws BuddyError {
     String query = "call get_ad_by_status(?)";
     return queryManager.runQuery(query, Ad.class, approvalStatus);
   }
@@ -36,7 +32,7 @@ public class AdDao {
     queryManager.update(query, adId);
   }
 
-  public Ad update(Ad ad) {
+  public Ad update(Ad ad) throws BuddyError {
     String query = "call update_advertisement(?, ?, ?, ?, ?, ?)";
     List<Ad> ads =
         queryManager.runQuery(query, Ad.class, ad.getAdId(), ad.getAdTitle(),
@@ -45,6 +41,11 @@ public class AdDao {
     if (ads.isEmpty()) {
       return null;
     }
-    return ads.get(0);
+    return ads.getFirst();
+  }
+
+  public List<Ad> getAllAdByOrg(String upperCase, int orgId) throws BuddyError {
+    String query = "call get_ads_by_status_org_id(?, ?)";
+    return queryManager.runQuery(query, Ad.class, upperCase, orgId);
   }
 }

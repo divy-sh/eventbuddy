@@ -100,11 +100,11 @@ public class UserService {
     return userDao.getCards(email);
   }
 
-  public List<Ticket> getTickets(String emailId) {
+  public List<Ticket> getTickets(String emailId) throws BuddyError {
     return userDao.getTickets(emailId);
   }
 
-  public boolean deleteUser(String emailId) {
+  public boolean deleteUser(String emailId) throws BuddyError {
     if (userDao.getUserDetail(emailId) == null) {
       return true;
     }

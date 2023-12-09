@@ -40,6 +40,7 @@ public class TransactionService {
       transactionDao.failTransaction(transaction);
       throw new BuddyError("transaction failed, please try again");
     }
+    result.setCardNum(card.getCardNumber());
     Transaction fin = transactionDao.finalizeTransaction(result);
     if (fin == null) {
       transactionDao.failTransaction(transaction);

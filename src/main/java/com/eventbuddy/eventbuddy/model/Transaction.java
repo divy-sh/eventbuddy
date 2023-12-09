@@ -25,10 +25,18 @@ public class Transaction {
   private int eventId;
 
   @JsonProperty("id_proof")
-  private String id_proof;
+  private String idProof;
 
   @JsonProperty("total_tickets")
-  private int total_tickets;
+  private int totalTickets;
+
+  public int getTransactionId() {
+    return transactionId;
+  }
+
+  public void setTransactionId(int transactionId) {
+    this.transactionId = transactionId;
+  }
 
   public LocalDateTime getTime() {
     return time;
@@ -70,27 +78,19 @@ public class Transaction {
     this.eventId = eventId;
   }
 
-  public String getId_proof() {
-    return id_proof;
+  public String getIdProof() {
+    return idProof;
   }
 
-  public void setId_proof(String id_proof) {
-    this.id_proof = id_proof;
+  public void setIdProof(String idProof) {
+    this.idProof = idProof;
   }
 
-  public float getTotalTickets() {
-    return total_tickets;
+  public int getTotalTickets() {
+    return totalTickets;
   }
 
-  public void setTotalTickets(int total_tickets) {
-    this.total_tickets = total_tickets;
-  }
-
-  public int getTransactionId() {
-    return transactionId;
-  }
-
-  public void setTransactionId(int transactionId) {
-    this.transactionId = transactionId;
+  public void setTotalTickets(int totalTickets) {
+    this.totalTickets = totalTickets;
   }
 }

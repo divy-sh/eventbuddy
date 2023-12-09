@@ -48,7 +48,17 @@ public class AdController {
     try {
       List<Ad> ad = adService.getAdWithFilter(status);
       return ResponseEntity.ok(ad);
-    } catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException | BuddyError e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
+    }
+  }
+
+  @GetMapping(value = "get/all/byOrg", produces = "application/json")
+  public ResponseEntity<?> getAllByOrg(@RequestParam("status") String status, @RequestParam("org_id") int orgId) {
+    try {
+      List<Ad> ad = adService.getAllByOrg(status, orgId);
+      return ResponseEntity.ok(ad);
+    } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
     }
   }

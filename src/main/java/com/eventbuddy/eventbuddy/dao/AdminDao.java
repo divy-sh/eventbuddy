@@ -12,8 +12,13 @@ public class AdminDao {
   @Autowired
   private QueryManager queryManager;
 
-  public void approveEvent(String email, int eventId, String status) {
+  public void createEventApproval(String email, int eventId, String status) {
     String query = "call insert_event_approval(?, ?, ?, ?, ?)";
+    queryManager.update(query, eventId, new Date(), status.toUpperCase(), "", email);
+  }
+
+  public void updateEventApproval(String email, int eventId, String status) {
+    String query = "call update_event_approval(?, ?, ?, ?, ?)";
     queryManager.update(query, eventId, new Date(), status.toUpperCase(), "", email);
   }
 

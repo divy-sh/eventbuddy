@@ -23,7 +23,7 @@ public class AdService {
   }
 
   public Ad getRandomAd(String status) throws BuddyError {
-    List<Ad> result = adDao.getAd(status);
+    List<Ad> result = adDao.getAdWithApproval(status.toUpperCase());
     if (result.isEmpty()) {
       return null;
     }
@@ -31,7 +31,7 @@ public class AdService {
     return result.get(randomIndex);
   }
 
-  public List<Ad> getAdWithFilter(String approvalStatus) {
+  public List<Ad> getAdWithFilter(String approvalStatus) throws BuddyError {
     return adDao.getAdWithApproval(approvalStatus.toUpperCase());
   }
 
@@ -46,5 +46,9 @@ public class AdService {
       throw new BuddyError("ad update failed");
     }
     return re;
+  }
+
+  public List<Ad> getAllByOrg(String status, int orgId) throws BuddyError {
+    return adDao.getAllAdByOrg(status.toUpperCase(), orgId);
   }
 }

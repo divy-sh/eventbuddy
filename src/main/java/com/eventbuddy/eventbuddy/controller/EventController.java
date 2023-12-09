@@ -79,7 +79,7 @@ public class EventController {
     try {
       List<Comment> comment = eventService.getComment(eventId);
       return ResponseEntity.ok(comment);
-    } catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e));
     }
   }
@@ -102,6 +102,17 @@ public class EventController {
       return ResponseEntity.ok(image);
     } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e));
+    }
+  }
+
+  @GetMapping(value = "get/all/byOrg", produces = "application/json")
+  public ResponseEntity<?> getEventByStatusAndOrg(@RequestParam("status") String approval,
+      @RequestParam("org_id") int orgId) {
+    try {
+      List<Event> events = eventService.getEventsByStatusAndOrg(approval, orgId);
+      return ResponseEntity.ok(events);
+    } catch (IllegalArgumentException | BuddyError e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
     }
   }
 }

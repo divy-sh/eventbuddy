@@ -52,7 +52,7 @@ public class EventService {
     return request;
   }
 
-  public List<Comment> getComment(int eventId) {
+  public List<Comment> getComment(int eventId) throws BuddyError {
     return eventDao.getComment(eventId);
   }
 
@@ -88,5 +88,9 @@ public class EventService {
 
   public List<Event> getEventsByStatus(String status) throws BuddyError {
     return eventDao.getEventsByStatus(status.toUpperCase());
+  }
+
+  public List<Event> getEventsByStatusAndOrg(String approval, int orgId) throws BuddyError {
+    return eventDao.getEventsByStatusAndOrg(approval.toUpperCase(), orgId);
   }
 }

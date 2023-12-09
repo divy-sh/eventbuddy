@@ -102,9 +102,10 @@ public class Event {
 
   public void update(Event event) throws IllegalAccessException {
     Class<?> clazz = Event.class;
-    Field[] fields = clazz.getFields();
+    Field[] fields = clazz.getDeclaredFields();
 
     for (Field field : fields) {
+      field.setAccessible(true);
       Object val = field.get(event);
       if (val != null) {
         field.set(this, val);

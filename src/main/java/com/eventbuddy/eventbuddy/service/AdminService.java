@@ -31,7 +31,7 @@ public class AdminService {
     if (event == null) {
       throw new BuddyError("Invalid event");
     }
-    adminDao.approveEvent(email, eventId, status);
+    adminDao.updateEventApproval(email, eventId, status);
     event = eventDao.getEvent(eventId);
     return event;
   }
