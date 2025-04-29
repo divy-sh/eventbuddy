@@ -48,7 +48,7 @@ public class UserController {
   }
 
   @GetMapping(value = "get", produces = "application/json")
-  public ResponseEntity<?> get(@RequestParam("email") String email) {
+  public ResponseEntity<?> get(@RequestParam String email) {
     try {
       User user = userService.get(email);
       return ResponseEntity.ok(user);
@@ -68,7 +68,7 @@ public class UserController {
   }
 
   @GetMapping(value = "get/card", produces = "application/json")
-  public ResponseEntity<?> getUserCard(@RequestParam("email") String email) {
+  public ResponseEntity<?> getUserCard(@RequestParam String email) {
     try {
       List<Card> result = userService.getCard(email);
       return ResponseEntity.ok(result);
@@ -88,7 +88,7 @@ public class UserController {
   }
 
   @GetMapping(value = "get/address", produces = "application/json")
-  public ResponseEntity<?> getUserAddress(@RequestParam("email") String email) {
+  public ResponseEntity<?> getUserAddress(@RequestParam String email) {
     try {
       List<Address> result = userService.getAddress(email);
       return ResponseEntity.ok(result);

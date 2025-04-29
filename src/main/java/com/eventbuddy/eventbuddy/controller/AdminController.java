@@ -2,7 +2,6 @@ package com.eventbuddy.eventbuddy.controller;
 
 import com.eventbuddy.eventbuddy.Utils.BuddyError;
 import com.eventbuddy.eventbuddy.Utils.ErrorResponse;
-import com.eventbuddy.eventbuddy.model.Ad;
 import com.eventbuddy.eventbuddy.model.Event;
 import com.eventbuddy.eventbuddy.model.TransactionData;
 import com.eventbuddy.eventbuddy.service.AdminService;
@@ -23,8 +22,8 @@ public class AdminController {
   private AdminService adminService;
 
   @GetMapping(value = "approve/event", produces = "application/json")
-  public ResponseEntity<?> approveEvent(@RequestParam("email") String email,
-      @RequestParam("event_id") int eventId, @RequestParam("status") String status) {
+  public ResponseEntity<?> approveEvent(@RequestParam String email,
+      @RequestParam("event_id") int eventId, @RequestParam String status) {
     try {
       Event event = adminService.approveEvent(email, eventId, status);
       return ResponseEntity.ok(event);
@@ -34,8 +33,8 @@ public class AdminController {
   }
 
   @GetMapping(value = "approve/ad", produces = "application/json")
-  public ResponseEntity<?> approveAd(@RequestParam("email") String email,
-      @RequestParam("ad_id") int adId, @RequestParam("status") String status) {
+  public ResponseEntity<?> approveAd(@RequestParam String email,
+      @RequestParam("ad_id") int adId, @RequestParam String status) {
     try {
       adminService.approveAd(email, adId, status);
       return ResponseEntity.ok().build();

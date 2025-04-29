@@ -6,14 +6,11 @@ import com.eventbuddy.eventbuddy.model.Event;
 import com.eventbuddy.eventbuddy.model.Image;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class EventDao {
 
-  @Autowired
-  private JdbcTemplate jdbcTemplate;
   @Autowired
   private QueryManager queryManager;
 

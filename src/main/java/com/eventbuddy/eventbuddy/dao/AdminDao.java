@@ -1,7 +1,6 @@
 package com.eventbuddy.eventbuddy.dao;
 
 import com.eventbuddy.eventbuddy.Utils.BuddyError;
-import com.eventbuddy.eventbuddy.model.Ad;
 import com.eventbuddy.eventbuddy.model.TransactionData;
 import java.util.Date;
 import java.util.List;

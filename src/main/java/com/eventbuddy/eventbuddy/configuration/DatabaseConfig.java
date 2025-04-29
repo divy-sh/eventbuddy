@@ -15,8 +15,8 @@ public class DatabaseConfig {
   @Autowired
   private Environment environment;
 
-  @Bean
-  public DataSource dataSource() {
+    @Bean
+    DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
     dataSource.setDriverClassName(Objects.requireNonNull(environment.getProperty("db.type")));
     dataSource.setUrl(Objects.requireNonNull(environment.getProperty("db.url")));
@@ -25,8 +25,8 @@ public class DatabaseConfig {
     return dataSource;
   }
 
-  @Bean
-  public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+    @Bean
+    JdbcTemplate jdbcTemplate(DataSource dataSource) {
     return new JdbcTemplate(dataSource);
   }
 }

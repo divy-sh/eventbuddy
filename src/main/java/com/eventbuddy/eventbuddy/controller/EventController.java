@@ -75,7 +75,7 @@ public class EventController {
   }
 
   @GetMapping(value = "get/comment", produces = "application/json")
-  public ResponseEntity<?> getComment(@RequestParam("eventId") int eventId) {
+  public ResponseEntity<?> getComment(@RequestParam int eventId) {
     try {
       List<Comment> comment = eventService.getComment(eventId);
       return ResponseEntity.ok(comment);
@@ -85,8 +85,8 @@ public class EventController {
   }
 
   @GetMapping(value = "add/image", produces = "application/json")
-  public ResponseEntity<?> addImage(@RequestParam("eventId") int eventId,
-      @RequestParam("imageUrl") String imageUrl) {
+  public ResponseEntity<?> addImage(@RequestParam int eventId,
+      @RequestParam String imageUrl) {
     try {
       Image image = eventService.addImage(eventId, imageUrl);
       return ResponseEntity.ok(image);
@@ -96,7 +96,7 @@ public class EventController {
   }
 
   @GetMapping(value = "get/image", produces = "application/json")
-  public ResponseEntity<?> getImage(@RequestParam("eventId") int eventId) {
+  public ResponseEntity<?> getImage(@RequestParam int eventId) {
     try {
       List<Image> image = eventService.getImages(eventId);
       return ResponseEntity.ok(image);

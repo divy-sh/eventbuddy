@@ -24,7 +24,7 @@ public class OrgController {
   private OrgService orgService;
 
   @GetMapping(value = "get", produces = "application/json")
-  public ResponseEntity<?> get(@RequestParam("orgId") int orgId) {
+  public ResponseEntity<?> get(@RequestParam int orgId) {
     try {
       Org org = orgService.get(orgId);
       return ResponseEntity.ok(org);
@@ -34,7 +34,7 @@ public class OrgController {
   }
 
   @GetMapping(value = "get/all", produces = "application/json")
-  public ResponseEntity<?> getOrgs(@RequestParam("email") String email) {
+  public ResponseEntity<?> getOrgs(@RequestParam String email) {
     try {
       List<Org> orgs = orgService.getOrgs(email);
       return ResponseEntity.ok(orgs);
@@ -44,7 +44,7 @@ public class OrgController {
   }
 
   @PostMapping(value = "create", produces = "application/json")
-  public ResponseEntity<?> createOrg(@RequestBody Org org, @RequestParam("email") String email) {
+  public ResponseEntity<?> createOrg(@RequestBody Org org, @RequestParam String email) {
     try {
       Org result = orgService.createOrg(org, email);
       return ResponseEntity.ok(result);
@@ -55,7 +55,7 @@ public class OrgController {
 
   @GetMapping(value = "add/team", produces = "application/json")
   public ResponseEntity<?> addUserToOrg(@RequestParam("org_id") int orgId,
-      @RequestParam("email") String email) {
+      @RequestParam String email) {
     try {
       orgService.addUserToOrg(orgId, email);
       return ResponseEntity.ok().build();

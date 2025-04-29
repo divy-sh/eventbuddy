@@ -32,24 +32,24 @@ public class SecurityConfig {
     return source;
   }
 
-  @Bean
-  public FilterRegistrationBean<CorsFilter> corsFilter() {
+    @Bean
+    FilterRegistrationBean<CorsFilter> corsFilter() {
     FilterRegistrationBean<CorsFilter> registrationBean = new FilterRegistrationBean<>();
     registrationBean.setFilter(new CorsFilter());
     registrationBean.addUrlPatterns("/*");
     return registrationBean;
   }
 
-  @Bean
-  public SecurityFilterChain filterChainHttp(HttpSecurity http) throws Exception {
+    @Bean
+    SecurityFilterChain filterChainHttp(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
         auth -> auth.anyRequest().permitAll()
     );
     return http.build();
   }
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
+    @Bean
+    PasswordEncoder passwordEncoder() {
     String idForEncode = "bcrypt";
     Map<String, PasswordEncoder> encoders = new HashMap<>();
     encoders.put(idForEncode, new BCryptPasswordEncoder());

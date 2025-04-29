@@ -34,7 +34,7 @@ public class AdController {
   }
 
   @GetMapping(value = "get", produces = "application/json")
-  public ResponseEntity<?> get(@RequestParam("status") String status) {
+  public ResponseEntity<?> get(@RequestParam String status) {
     try {
       Ad ad = adService.getRandomAd(status.toUpperCase());
       return ResponseEntity.ok(ad);
@@ -54,7 +54,7 @@ public class AdController {
   }
 
   @GetMapping(value = "get/all/byOrg", produces = "application/json")
-  public ResponseEntity<?> getAllByOrg(@RequestParam("status") String status, @RequestParam("org_id") int orgId) {
+  public ResponseEntity<?> getAllByOrg(@RequestParam String status, @RequestParam("org_id") int orgId) {
     try {
       List<Ad> ad = adService.getAllByOrg(status, orgId);
       return ResponseEntity.ok(ad);
