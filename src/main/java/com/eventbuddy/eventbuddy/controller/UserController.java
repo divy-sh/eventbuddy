@@ -2,6 +2,7 @@ package com.eventbuddy.eventbuddy.controller;
 
 import com.eventbuddy.eventbuddy.Utils.BuddyError;
 import com.eventbuddy.eventbuddy.Utils.ErrorResponse;
+import com.eventbuddy.eventbuddy.configuration.JwtGenerator;
 import com.eventbuddy.eventbuddy.model.Address;
 import com.eventbuddy.eventbuddy.model.Card;
 import com.eventbuddy.eventbuddy.model.Ticket;
@@ -27,10 +28,14 @@ public class UserController {
   @Autowired
   UserService userService;
 
+  @Autowired
+  JwtGenerator jwtGenerator;
+
   @PostMapping(value = "login", produces = "application/json")
   public ResponseEntity<?> login(@RequestBody User request) {
     try {
-      UserToken token = userService.login(request);
+      User user = userService.login(request);
+      UserToken token = jwtGenerator.generateToken(user);
       return ResponseEntity.ok(token);
     } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));

@@ -1,13 +1,11 @@
 package com.eventbuddy.eventbuddy.service;
 
 import com.eventbuddy.eventbuddy.Utils.BuddyError;
-import com.eventbuddy.eventbuddy.configuration.JwtGenerator;
 import com.eventbuddy.eventbuddy.dao.UserDao;
 import com.eventbuddy.eventbuddy.model.Address;
 import com.eventbuddy.eventbuddy.model.Card;
 import com.eventbuddy.eventbuddy.model.Ticket;
 import com.eventbuddy.eventbuddy.model.User;
-import com.eventbuddy.eventbuddy.model.UserToken;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,16 +18,14 @@ public class UserService {
   private UserDao userDao;
   @Autowired
   private PasswordEncoder passwordEncoder;
-  @Autowired
-  private JwtGenerator jwtGenerator;
 
-  public UserToken login(User user) throws BuddyError {
+  public User login(User user) throws BuddyError {
     User userCredential = userDao.getUserCredential(user.getEmail());
     if (userCredential == null || !passwordEncoder.matches(user.getPassword(),
         userCredential.getPassword())) {
       throw new BuddyError("Invalid User Credentials");
     } else {
-      return jwtGenerator.generateToken(userDao.getUserDetail(user.getEmail()));
+      return userDao.getUserDetail(user.getEmail());
     }
   }
 
