@@ -24,7 +24,7 @@ public class AdController {
   private AdService adService;
 
   @PostMapping(value = "create", produces = "application/json")
-  public ResponseEntity<?> addUserCard(@RequestBody Ad ad) {
+  public ResponseEntity<?> createAd(@RequestBody Ad ad) {
     try {
       Ad result = adService.createAd(ad);
       return ResponseEntity.ok(result);

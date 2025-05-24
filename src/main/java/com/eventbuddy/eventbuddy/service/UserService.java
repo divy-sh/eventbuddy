@@ -1,6 +1,7 @@
 package com.eventbuddy.eventbuddy.service;
 
 import com.eventbuddy.eventbuddy.Utils.BuddyError;
+import com.eventbuddy.eventbuddy.Utils.Utils;
 import com.eventbuddy.eventbuddy.dao.UserDao;
 import com.eventbuddy.eventbuddy.model.Address;
 import com.eventbuddy.eventbuddy.model.Card;
@@ -51,7 +52,7 @@ public class UserService {
   }
 
   public Card addCard(Card request) throws BuddyError {
-    if (userDao.getUserDetail(request.getEmail()) == null) {
+    if (!request.getEmail().equals(Utils.getAuthenticatedUser().getEmail())) {
       throw new BuddyError("invalid user email");
     }
     userDao.addCard(request);
@@ -63,7 +64,7 @@ public class UserService {
   }
 
   public void updatePassword(User user) throws BuddyError {
-    if (userDao.getUserDetail(user.getEmail()) == null) {
+    if (!user.getEmail().equals(Utils.getAuthenticatedUser().getEmail())) {
       throw new BuddyError("invalid user email");
     }
     user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -71,7 +72,7 @@ public class UserService {
   }
 
   public Address addAddress(Address request) throws BuddyError {
-    if (userDao.getUserDetail(request.getEmailId()) == null) {
+    if (!request.getEmailId().equals(Utils.getAuthenticatedUser().getEmail())) {
       throw new BuddyError("invalid user email");
     }
     userDao.addAddress(request);
@@ -83,28 +84,31 @@ public class UserService {
   }
 
   public List<Address> getAddress(String email) throws BuddyError {
-    if (userDao.getUserDetail(email) == null) {
+    if (!email.equals(Utils.getAuthenticatedUser().getEmail())) {
       throw new BuddyError("invalid user email");
     }
     return userDao.getAddress(email);
   }
 
   public List<Card> getCard(String email) throws BuddyError {
-    if (userDao.getUserDetail(email) == null) {
+    if (!email.equals(Utils.getAuthenticatedUser().getEmail())) {
       throw new BuddyError("invalid user email");
     }
     return userDao.getCards(email);
   }
 
-  public List<Ticket> getTickets(String emailId) throws BuddyError {
-    return userDao.getTickets(emailId);
+  public List<Ticket> getTickets(String email) throws BuddyError {
+    if (!email.equals(Utils.getAuthenticatedUser().getEmail())) {
+      throw new BuddyError("invalid user email");
+    }
+    return userDao.getTickets(email);
   }
 
-  public boolean deleteUser(String emailId) throws BuddyError {
-    if (userDao.getUserDetail(emailId) == null) {
-      return true;
+  public boolean deleteUser(String email) throws BuddyError {
+    if (!email.equals(Utils.getAuthenticatedUser().getEmail())) {
+      throw new BuddyError("invalid user email");
     }
-    userDao.deleteAccount(emailId);
-    return userDao.getUserDetail(emailId) == null;
+    userDao.deleteAccount(email);
+    return userDao.getUserDetail(email) == null;
   }
 }

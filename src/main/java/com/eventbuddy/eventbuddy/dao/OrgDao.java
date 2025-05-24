@@ -2,6 +2,8 @@ package com.eventbuddy.eventbuddy.dao;
 
 import com.eventbuddy.eventbuddy.Utils.BuddyError;
 import com.eventbuddy.eventbuddy.model.Org;
+import com.eventbuddy.eventbuddy.model.OrgTeam;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,6 +26,11 @@ public class OrgDao {
   public List<Org> getOrgs(String email) throws BuddyError {
     String query = "call get_all_orgs(email)";
     return queryManager.runQuery(query, Org.class);
+  }
+
+  public List<OrgTeam> getOrgTeam(int orgId) throws BuddyError {
+    String query = "call get_event_org_team(?)";
+    return queryManager.runQuery(query, OrgTeam.class, orgId);
   }
 
   public void createOrg(Org org, String email) throws BuddyError {

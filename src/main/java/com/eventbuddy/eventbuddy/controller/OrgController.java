@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,15 +45,16 @@ public class OrgController {
   }
 
   @PostMapping(value = "create", produces = "application/json")
-  public ResponseEntity<?> createOrg(@RequestBody Org org, @RequestParam String email) {
+  public ResponseEntity<?> createOrg(@RequestBody Org org) {
     try {
-      Org result = orgService.createOrg(org, email);
+      Org result = orgService.createOrg(org);
       return ResponseEntity.ok(result);
     } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
     }
   }
 
+  @PreAuthorize("hasRole('ORGANIZER')")
   @GetMapping(value = "add/team", produces = "application/json")
   public ResponseEntity<?> addUserToOrg(@RequestParam("org_id") int orgId,
       @RequestParam String email) {
@@ -64,6 +66,7 @@ public class OrgController {
     }
   }
 
+  @PreAuthorize("hasRole('ORGANIZER')")
   @DeleteMapping(value = "delete", produces = "application/json")
   public ResponseEntity<?> deleteOrg(@RequestParam("org_id") int orgId) {
     try {

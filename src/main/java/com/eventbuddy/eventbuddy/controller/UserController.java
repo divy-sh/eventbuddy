@@ -13,6 +13,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value = "user")
+@PreAuthorize("hasRole('USER')")
 public class UserController {
 
   @Autowired
@@ -31,6 +33,7 @@ public class UserController {
   @Autowired
   JwtGenerator jwtGenerator;
 
+  @PreAuthorize("permitAll()")
   @PostMapping(value = "login", produces = "application/json")
   public ResponseEntity<?> login(@RequestBody User request) {
     try {
@@ -42,6 +45,7 @@ public class UserController {
     }
   }
 
+  @PreAuthorize("permitAll()")
   @PostMapping(value = "register", produces = "application/json")
   public ResponseEntity<?> register(@RequestBody User request) {
     try {

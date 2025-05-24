@@ -1,6 +1,7 @@
 package com.eventbuddy.eventbuddy.service;
 
 import com.eventbuddy.eventbuddy.Utils.BuddyError;
+import com.eventbuddy.eventbuddy.Utils.Utils;
 import com.eventbuddy.eventbuddy.dao.EventDao;
 import com.eventbuddy.eventbuddy.dao.TransactionDao;
 import com.eventbuddy.eventbuddy.dao.UserDao;
@@ -27,12 +28,12 @@ public class TransactionService {
     if (event == null) {
       throw new BuddyError("invalid event id");
     }
-    User user = userDao.getUserDetail(transaction.getEmailId());
-    if (user == null) {
-      throw new BuddyError("invalid user id");
+    User user = Utils.getAuthenticatedUser();
+    if (!transaction.getEmailId().equals(user.getEmail())) {
+      throw new BuddyError("invalid user");
     }
     Card card = userDao.getCard(transaction.getCardNum());
-    if (card == null) {
+    if (card == null || !card.getEmail().equals(user.getEmail())) {
       throw new BuddyError("invalid card number");
     }
     Transaction result = transactionDao.createTransaction(transaction);
@@ -49,11 +50,11 @@ public class TransactionService {
     return fin;
   }
 
-  public List<Transaction> getUserTransactions(String emailId) throws BuddyError {
-    User user = userDao.getUserDetail(emailId);
-    if (user == null) {
+  public List<Transaction> getUserTransactions(String email) throws BuddyError {
+    User user = Utils.getAuthenticatedUser();
+    if (!email.equals(user.getEmail())) {
       throw new BuddyError("invalid user id");
     }
-    return transactionDao.getUserTransactions(emailId);
+    return transactionDao.getUserTransactions(email);
   }
 }

@@ -1,12 +1,17 @@
 package com.eventbuddy.eventbuddy.service;
 
 import com.eventbuddy.eventbuddy.Utils.BuddyError;
+import com.eventbuddy.eventbuddy.Utils.Utils;
 import com.eventbuddy.eventbuddy.dao.EventDao;
 import com.eventbuddy.eventbuddy.dao.OrgDao;
 import com.eventbuddy.eventbuddy.dao.UserDao;
 import com.eventbuddy.eventbuddy.model.Comment;
 import com.eventbuddy.eventbuddy.model.Event;
 import com.eventbuddy.eventbuddy.model.Image;
+import com.eventbuddy.eventbuddy.model.Org;
+import com.eventbuddy.eventbuddy.model.OrgTeam;
+import com.eventbuddy.eventbuddy.model.User;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,9 +39,14 @@ public class EventService {
   }
 
   public Event createEvent(Event request) throws BuddyError {
-    if (orgDao.getOrg(request.getOrgId()) == null) {
+    Org org = orgDao.getOrg(request.getOrgId());
+    if (org == null) {
       throw new BuddyError("Invalid Org for the event");
     }
+
+    // check if current auth user is part of the org passed, if not fail the request
+    authUserHasAccessToOrg(org.getOrgId());
+    
     eventDao.createEvent(request);
     return request;
   }
@@ -71,6 +81,11 @@ public class EventService {
     if (event == null) {
       throw new BuddyError("invalid event Id");
     }
+    Org org = orgDao.getOrg(event.getOrgId());
+
+    // check if current auth user is part of the org passed, if not fail the request
+    authUserHasAccessToOrg(org.getOrgId());
+
     Image result = eventDao.addImage(eventId, imageUrl);
     if (result == null) {
       throw new BuddyError("error in adding image, ");
@@ -92,5 +107,18 @@ public class EventService {
 
   public List<Event> getEventsByStatusAndOrg(String approval, int orgId) throws BuddyError {
     return eventDao.getEventsByStatusAndOrg(approval.toUpperCase(), orgId);
+  }
+
+  private void authUserHasAccessToOrg(int orgId) throws BuddyError {
+    User authUser = Utils.getAuthenticatedUser();
+    if (authUser == null) {
+      throw new BuddyError("No Authentication");
+    }
+    List<OrgTeam> orgTeam = orgDao.getOrgTeam(orgId);
+    boolean isUserInOrgTeam = orgTeam.stream()
+    .anyMatch(teamMember -> teamMember.getOrganizerEmailId().equals(authUser.getEmail()));
+    if (!isUserInOrgTeam) {
+        throw new BuddyError("Authenticated user is not a member of the organization");
+    }
   }
 }

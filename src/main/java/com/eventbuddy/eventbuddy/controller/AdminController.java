@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,16 +17,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value = "admin")
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
   @Autowired
   private AdminService adminService;
 
   @GetMapping(value = "approve/event", produces = "application/json")
-  public ResponseEntity<?> approveEvent(@RequestParam String email,
-      @RequestParam("event_id") int eventId, @RequestParam String status) {
+  public ResponseEntity<?> approveEvent(@RequestParam("event_id") int eventId, @RequestParam String status) {
     try {
-      Event event = adminService.approveEvent(email, eventId, status);
+      Event event = adminService.approveEvent(eventId, status);
       return ResponseEntity.ok(event);
     } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
@@ -33,10 +34,9 @@ public class AdminController {
   }
 
   @GetMapping(value = "approve/ad", produces = "application/json")
-  public ResponseEntity<?> approveAd(@RequestParam String email,
-      @RequestParam("ad_id") int adId, @RequestParam String status) {
+  public ResponseEntity<?> approveAd(@RequestParam("ad_id") int adId, @RequestParam String status) {
     try {
-      adminService.approveAd(email, adId, status);
+      adminService.approveAd(adId, status);
       return ResponseEntity.ok().build();
     } catch (IllegalArgumentException | BuddyError e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e));
